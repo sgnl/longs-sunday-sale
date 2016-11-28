@@ -33,4 +33,8 @@ app.post('/newsletter/unsub', (req, res) => {
   console.log('unsub!');
 });
 
+app.use('*', (_, res) => {
+  res.send('lolwut?');
+})
+
 app.listen(3001);
