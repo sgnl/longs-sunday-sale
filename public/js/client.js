@@ -4,7 +4,9 @@ window.onload = function() {
   newsletterForm.submit(event => {
     event.preventDefault();
 
-    var settings = {
+    const emailEl = newsletterForm.find('#email');
+
+    const settings = {
       'async': true,
       // 'crossDomain': true,
       'url': '/newsletter/sub',
@@ -17,25 +19,17 @@ window.onload = function() {
     }
 
     $.ajax(settings)
-      .done(updateViewWithSuccess(newsletterForm))
-      .fail(updateViewWithError(newsletterForm));
+      .done(updateView(newsletterForm))
+      .fail(updateView(newsletterForm));
   });
 };
 
-function updateViewWithSuccess(view) {
-  const parentEl = view.parent();
-
-
+function updateView(view) {
   return function(response) {
-    const newHeader = $('<h5>', {class: 'center-align', text: response});
+    view.find('#email')
+      .val(response)
+      .attr('readonly', true);
 
-    parentEl.empty();
-    parentEl.append(newHeader);
-  };
-}
-
-function updateViewWithError(view) {
-  return (jqXHR, textStatus) => {
-
+    view.find('.btn:last-child').val('success').addClass('disabled');
   };
 }
