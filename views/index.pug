@@ -4,7 +4,18 @@ html(lang="en")
 head
   meta(charset="UTF-8")
   title Long's/CVS Sunday Sale!!!
+  link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css")
 body
-  h1 sumday sale
+  h1 long's sunday sale pdf
+
   each url in urls
     p= url
+
+  h2 sign up for the newsletter
+
+  form#newsletter-signup
+    label(for="email") email
+    input#email(required name="email" type="email" placeholder="get updated by email each week")
+    input(type="submit" value="Join!")
+
+  script(src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js")
