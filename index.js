@@ -7,12 +7,21 @@ const MongoService = require('./services/mongo');
 
 const env = process.env.ENVIRONMENT || 'DEVELOPMENT';
 
+app.set('view engine', 'pug');
+app.set('views', './views');
+
 // otherwise nginx will serve static files in production
 if (env === 'DEVELOPMENT') {
   app.use(express.static('./public'));
 }
 
 app.use(bodyParser.json({extended: true}));
+
+app.get('/', (req, res) => {
+  MongoService.findMostRecentUrls()
+    .then(urls => res.render('index', {urls}))
+    .catch(err => res.send(err));
+});
 
 app.post('/newsletter/sub', (req, res) => {
   if (!req.body.hasOwnProperty('email')) {
