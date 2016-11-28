@@ -1,0 +1,20 @@
+{
+  "name": "longs_sunday_sale",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js $(date +'%m%d')"
+  },
+  "keywords": [],
+  "author": "Ray Farias <rayrfarias@gmail.com> (http://github.com/sgnl)",
+  "license": "ISC",
+  "dependencies": {
+    "got": "^6.6.3",
+    "mongoose": "^4.7.0"
+  },
+  "xo": {
+    "esnext": true,
+    "space": 2
+  }
+}
