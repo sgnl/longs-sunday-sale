@@ -19,7 +19,7 @@ app.use(bodyParser.json({extended: true}));
 
 app.get('/', (req, res) => {
   MongoService.findMostRecentUrls()
-    .then(urls => res.render('index', {urls}))
+    .then(brochures => res.render('index', {brochures}))
     .catch(err => res.send(err));
 });
 
