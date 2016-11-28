@@ -8,7 +8,7 @@
   },
   "keywords": [],
   "author": "Ray Farias <rayrfarias@gmail.com> (http://github.com/sgnl)",
-  "license": "ISC",
+  "license": "GPL-3",
   "dependencies": {
     "got": "^6.6.3",
     "mongoose": "^4.7.0"
