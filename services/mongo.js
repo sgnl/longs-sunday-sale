@@ -9,20 +9,37 @@ mongoose.connect(`mongodb://${CONFIG.MONGO.USER}:${CONFIG.MONGO.PASSWORD}@${CONF
 mongoose.Promise = Promise;
 
 const { Brochure, Subscription } = require('../models');
+const upsertOptions = {upsert: true, new: true};
 
 function addNewBrochureUrl(url) {
   return new Promise((resolve, reject) => {
     const newBrochure = {url};
 
-    Brochure.findOneAndUpdate(newBrochure, newBrochure, {upsert: true, new: true})
+    Brochure.findOneAndUpdate(newBrochure, newBrochure, upsertOptions)
       .then(_ => resolve(url))
       .catch(err => {
         // => TODO: alert me!
-        console.log('something went wrong saving to db!: ', err);
+        console.log('something went wrong saving brochure to db!: ', err);
+        reject(err);
       });
   });
 }
 
+function addNewSubscription(email) {
+  return new Promise((resolve, reject) => {
+    const newSubscription = {email};
+
+    Subscription.findOneAndUpdate(newSubscription, newSubscription, upsertOptions)
+      .then(_ => resolve(email))
+      .catch(err => {
+        // => TODO: alert me!
+        console.log('something went wrong saving subscription to db!: ', err);
+        reject(err);
+      })
+  });
+}
+
 module.exports = {
-  addNewBrochureUrl
+  addNewBrochureUrl,
+  addNewSubscription
 };
