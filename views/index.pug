@@ -5,17 +5,26 @@ head
   meta(charset="UTF-8")
   title Long's/CVS Sunday Sale!!!
   link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css")
+  link(rel="stylesheet" href="/css/styles.css")
 body
-  h1 long's sunday sale pdf
+  .container.center-align.white-text
+    header.section
+      h1 long's sunday sale pdf
 
-  each url in urls
-    p= url
+    content#main.section
+      ul.collection
+        each url in urls
+          li
+            a(href=`${url}` class="collection-item")= url
 
-  h2 sign up for the newsletter
+    .section
+      .row
+        .col.s12.m4.offset-m2.l6.offset-l3
+          form#newsletter-signup
+            input#email.center-align(required name="email" type="email" placeholder="sign up for the newsletter")
+            input.black-text(type="submit" value="Join!")
 
-  form#newsletter-signup
-    label(for="email") email
-    input#email(required name="email" type="email" placeholder="get updated by email each week")
-    input(type="submit" value="Join!")
+    footer
+      p 2016 created by rayfarias
 
   script(src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js")
