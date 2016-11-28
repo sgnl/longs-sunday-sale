@@ -42,6 +42,7 @@ app.post('/newsletter/sub', validatePayload, (req, res) => {
     });
 });
 
+// change to get with query params for ez-unsub via email link
 app.post('/newsletter/unsub', validatePayload, (req, res) => {
   MongoService.removeSubscription(req.body.email)
     .then(email => {
