@@ -27,7 +27,6 @@ function updateViewWithSuccess(view) {
 
 
   return function(response) {
-    console.log('response: ', response);
     const newHeader = $('<h5>', {class: 'center-align', text: response});
 
     parentEl.empty();
