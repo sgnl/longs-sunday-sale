@@ -11,6 +11,7 @@
   "author": "Ray Farias <rayrfarias@gmail.com> (http://github.com/sgnl)",
   "license": "GPL-3",
   "dependencies": {
+    "bluebird": "^3.4.6",
     "express": "^4.14.0",
     "got": "^6.6.3",
     "mongoose": "^4.7.0",
