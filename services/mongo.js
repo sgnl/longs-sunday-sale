@@ -13,10 +13,21 @@ const upsertOptions = {upsert: true, new: true};
 
 function addNewBrochureUrl(url) {
   return new Promise((resolve, reject) => {
-    const newBrochure = {url};
+    const newBrochureURLObject = {url};
 
-    Brochure.findOneAndUpdate(newBrochure, newBrochure, upsertOptions)
-      .then(_ => resolve(url))
+    Brochure.findOneAndUpdate(newBrochureURLObject, upsertOptions)
+      .then(doc => {
+        if (doc === null) {
+          const newBrochure = new Brochure(newBrochureURLObject);
+
+          return newBrochure.save()
+            .then(_ => resolve(url))
+            .catch(err => console.error('wut'));
+
+        } else {
+          resolve(`${url} already in database.`);
+        }
+      })
       .catch(err => {
         // => TODO: alert me!
         console.log('something went wrong saving brochure to db!: ', err);
