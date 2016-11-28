@@ -1,28 +1,42 @@
 window.onload = function() {
-  const newsletterForm = document.querySelector('#newsletter-signup');
+  const newsletterForm = $('#newsletter-signup');
 
-  newsletterForm.addEventListener('submit', event => {
+  newsletterForm.submit(event => {
     event.preventDefault();
 
-    var data = JSON.stringify({email: newsletterForm.querySelector('#email').value});
+    var settings = {
+      'async': true,
+      // 'crossDomain': true,
+      'url': '/newsletter/sub',
+      'method': 'POST',
+      'headers': {
+        'content-type': 'application/json',
+        'cache-control': 'no-cache',
+      },
+      'data': JSON.stringify({email: newsletterForm.find('#email').val()})
+    }
 
-    var xhr = new XMLHttpRequest();
-
-    xhr.addEventListener('load', updateViewWithSuccess);
-    xhr.addEventListener('error', updateViewWithError);
-
-    xhr.open("POST", "/newsletter/sub");
-    xhr.setRequestHeader("content-type", "application/json");
-    xhr.setRequestHeader("cache-control", "no-cache");
-
-    xhr.send(data);
+    $.ajax(settings)
+      .done(updateViewWithSuccess(newsletterForm))
+      .fail(updateViewWithError(newsletterForm));
   });
 };
 
-function updateViewWithSuccess(event) {
-  console.log(this.responseText);
+function updateViewWithSuccess(view) {
+  const parentEl = view.parent();
+
+
+  return function(response) {
+    console.log('response: ', response);
+    const newHeader = $('<h5>', {class: 'center-align', text: response});
+
+    parentEl.empty();
+    parentEl.append(newHeader);
+  };
 }
 
-function updateViewWithError(event) {
-  console.log(this.responseText);
+function updateViewWithError(view) {
+  return (jqXHR, textStatus) => {
+
+  };
 }
