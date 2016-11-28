@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js $(date +'%m%d')"
+    "cron": "node ./lib/cron.js $(date +'%m%d')",
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "Ray Farias <rayrfarias@gmail.com> (http://github.com/sgnl)",
