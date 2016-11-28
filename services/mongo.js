@@ -61,8 +61,19 @@ function addNewSubscription(email) {
   });
 }
 
+function removeSubscription(email) {
+  return new Promise((resolve, reject) => {
+    const subscriptionToRemove = {email};
+
+    Subscription.remove(email)
+      .then(_ => resolve(email))
+      .catch(err => reject(err))
+  });
+}
+
 module.exports = {
   addNewBrochureUrl,
   findMostRecentUrls,
-  addNewSubscription
+  addNewSubscription,
+  removeSubscription
 };
