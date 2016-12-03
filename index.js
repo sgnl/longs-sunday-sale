@@ -1,6 +1,6 @@
 
 'use strict';
-const express = require('express');
+const express = require('express')
 const app = express();
 const bodyParser = require('body-parser');
 const MongoService = require('./services/mongo');
@@ -23,19 +23,22 @@ app.get('/', (req, res) => {
     .catch(err => res.send(err));
 });
 
-function validatePayload(req, res, next) {
-  if (!req.body.hasOwnProperty('email')) {
+function validatePayloadOrQueryParams(req, res, next) {
+  if (req.method === 'POST' && !req.body.hasOwnProperty('email')) {
+    return res.status(422).send('nope.');
+  } else if (req.method === 'GET' && !req.query.hasOwnProperty('email')) {
     return res.status(422).send('nope.');
   } else {
     return next();
   }
 }
 
-app.post('/newsletter/sub', validatePayload, (req, res) => {
+app.post('/newsletter/sub', validatePayloadOrQueryParams, (req, res) => {
   MongoService.addNewSubscription(req.body.email)
     .then(_ => {
       res.send('added to the list.');
     })
+    // .then(MailService.sendConfirmationEmail)
     .catch(err => {
       console.error('error saving new subscription email ', err);
       res.status(500);
@@ -43,7 +46,7 @@ app.post('/newsletter/sub', validatePayload, (req, res) => {
 });
 
 // change to get with query params for ez-unsub via email link
-app.post('/newsletter/unsub', validatePayload, (req, res) => {
+app.post('/newsletter/unsub', validatePayloadOrQueryParams, (req, res) => {
   MongoService.removeSubscription(req.body.email)
     .then(email => {
       res.send(`${email} has been removed from the mailing list. aloha.`);
