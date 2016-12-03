@@ -1,4 +1,6 @@
-window.onload = function() {
+/* global window, $ */
+
+window.onload = function () {
   const newsletterForm = $('#newsletter-signup');
 
   newsletterForm.submit(event => {
@@ -7,16 +9,16 @@ window.onload = function() {
     const emailEl = newsletterForm.find('#email');
 
     const settings = {
-      'async': true,
+      async: true,
       // 'crossDomain': true,
-      'url': '/newsletter/sub',
-      'method': 'POST',
-      'headers': {
+      url: '/newsletter/sub',
+      method: 'POST',
+      headers: {
         'content-type': 'application/json',
-        'cache-control': 'no-cache',
+        'cache-control': 'no-cache'
       },
-      'data': JSON.stringify({email: newsletterForm.find('#email').val()})
-    }
+      data: JSON.stringify({email: emailEl.val()})
+    };
 
     $.ajax(settings)
       .done(updateView(newsletterForm))
@@ -25,7 +27,7 @@ window.onload = function() {
 };
 
 function updateView(view) {
-  return function(response) {
+  return function (response) {
     view.find('#email')
       .val(response)
       .attr('readonly', true);

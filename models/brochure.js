@@ -1,18 +1,19 @@
 
 'use strict';
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 const moment = require('moment');
+
+const Schema = mongoose.Schema;
 
 const brochureSchema = new Schema({
   url: {required: true, type: String},
-  date_added: {
+  dateAdded: {
     required: true,
     type: String,
-    default: function() {
+    default() {
       return moment().format('MMM Do');
-    },
-  },
+    }
+  }
   // clicks: {type: Number, default: 0} TODO
 });
 

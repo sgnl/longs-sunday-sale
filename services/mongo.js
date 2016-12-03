@@ -8,7 +8,8 @@ const CONFIG = require('../config/');
 mongoose.connect(`mongodb://${CONFIG.MONGO.USER}:${CONFIG.MONGO.PASSWORD}@${CONFIG.MONGO.URL}`);
 mongoose.Promise = Promise;
 
-const { Brochure, Subscription } = require('../models');
+const {Brochure, Subscription} = require('../models');
+
 const upsertOptions = {upsert: true, new: true};
 
 function addNewBrochureUrl(url) {
@@ -21,12 +22,10 @@ function addNewBrochureUrl(url) {
           const newBrochure = new Brochure(newBrochureURLObject);
 
           return newBrochure.save()
-            .then(_ => resolve(url))
-            .catch(err => console.error('wut'));
-
-        } else {
-          resolve(`${url} already in database.`);
+            .then(() => resolve(url))
+            .catch(err => console.error(err));
         }
+        return resolve(`${url} already in database.`);
       })
       .catch(err => {
         // => TODO: alert me!
@@ -43,7 +42,7 @@ function findMostRecentUrls() {
       .catch(err => {
         console.log('something went wrong retrieving MostRecentUrls');
         reject(err);
-      })
+      });
   });
 }
 
@@ -52,22 +51,20 @@ function addNewSubscription(email) {
     const newSubscription = {email};
 
     Subscription.findOneAndUpdate(newSubscription, newSubscription, upsertOptions)
-      .then(_ => resolve(email))
+      .then(() => resolve(email))
       .catch(err => {
         // => TODO: alert me!
         console.log('something went wrong saving subscription to db!: ', err);
         reject(err);
-      })
+      });
   });
 }
 
 function removeSubscription(email) {
   return new Promise((resolve, reject) => {
-    const subscriptionToRemove = {email};
-
     Subscription.remove(email)
-      .then(_ => resolve(email))
-      .catch(err => reject(err))
+      .then(() => resolve(email))
+      .catch(err => reject(err));
   });
 }
 

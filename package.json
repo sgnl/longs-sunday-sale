@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "cron": "node ./lib/cron.js $(date +'%m%d')",
-    "start": "node index.js"
+    "start": "node index.js",
+    "test": "xo"
   },
   "keywords": [],
   "author": "Ray Farias <rayrfarias@gmail.com> (http://github.com/sgnl)",
@@ -20,8 +21,12 @@
     "pug": "^2.0.0-beta6",
     "sendgrid": "^4.7.1"
   },
+  "devDependencies": {
+    "xo": "^0.17.1"
+  },
   "xo": {
     "esnext": true,
-    "space": 2
+    "space": true,
+    "globals": ["window"]
   }
 }

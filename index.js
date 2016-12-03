@@ -1,9 +1,10 @@
 
 'use strict';
-const express = require('express')
-const app = express();
+const express = require('express');
 const bodyParser = require('body-parser');
 const MongoService = require('./services/mongo');
+
+const app = express();
 
 const env = process.env.ENVIRONMENT || 'DEVELOPMENT';
 
@@ -24,18 +25,17 @@ app.get('/', (req, res) => {
 });
 
 function validatePayloadOrQueryParams(req, res, next) {
-  if (req.method === 'POST' && !req.body.hasOwnProperty('email')) {
+  if (req.method === 'POST' && !{}.hasOwnProperty.call(req.body, 'email')) {
     return res.status(422).send('nope.');
-  } else if (req.method === 'GET' && !req.query.hasOwnProperty('email')) {
+  } else if (req.method === 'GET' && !{}.hasOwnProperty.call(req.query, 'email')) {
     return res.status(422).send('nope.');
-  } else {
-    return next();
   }
+  return next();
 }
 
 app.post('/newsletter/sub', validatePayloadOrQueryParams, (req, res) => {
   MongoService.addNewSubscription(req.body.email)
-    .then(_ => {
+    .then(() => {
       res.send('added to the list.');
     })
     // .then(MailService.sendConfirmationEmail)
@@ -54,11 +54,11 @@ app.post('/newsletter/unsub', validatePayloadOrQueryParams, (req, res) => {
     .catch(err => {
       console.error('error removing subscription ', err);
       res.status(500);
-    })
+    });
 });
 
 app.use('*', (_, res) => {
   res.send('lolwut?');
-})
+});
 
 app.listen(3001);
