@@ -1,7 +1,7 @@
 
 'use strict';
 /* eslint new-cap: "off" */
-// ^ used for sg.API()
+
 let sg = require('sendgrid');
 
 const CONFIG = require('../config/');
