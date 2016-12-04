@@ -15,7 +15,7 @@ body
       ul.collection
         each brochure in brochures
           li
-            a.black-text(target='_blank' href=`${brochure.url}` class='collection-item')= `${brochure.date_added} - ${brochure.url}`
+            a.black-text(target='_blank' href=`${brochure.url}` class='collection-item')= `${brochure.dateAdded} : ${brochure.url}`
 
     .section
       .row
