@@ -37,7 +37,7 @@ function addNewBrochureUrl(url) {
 
 function findMostRecentUrls() {
   return new Promise((resolve, reject) => {
-    Brochure.find({})
+    Brochure.find({}).sort({id: -1})
       .then(brochures => resolve(brochures))
       .catch(err => {
         console.log('something went wrong retrieving MostRecentUrls');
