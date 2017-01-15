@@ -15,11 +15,13 @@
     "bluebird": "^3.4.6",
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
+    "express-winston": "^2.1.2",
     "got": "^6.6.3",
     "moment": "^2.17.0",
     "mongoose": "^4.7.0",
     "pug": "^2.0.0-beta6",
-    "sendgrid": "^4.7.1"
+    "sendgrid": "^4.7.1",
+    "winston": "^2.3.0"
   },
   "devDependencies": {
     "xo": "^0.17.1"
@@ -27,6 +29,8 @@
   "xo": {
     "esnext": true,
     "space": true,
-    "globals": ["window"]
+    "globals": [
+      "window"
+    ]
   }
 }
