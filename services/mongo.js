@@ -18,7 +18,7 @@ function addNewBrochureUrl(url) {
 
   logger.info('attempting to upsert new brochure url');
 
-  return Brochure.findOneAndUpdate(newBrochureURLObject, upsertOptions)
+  return Brochure.findOneAndUpdate(newBrochureURLObject, newBrochureURLObject, upsertOptions)
     .then(doc => {
       logger.info('brochure document created');
       return doc;
@@ -27,8 +27,11 @@ function addNewBrochureUrl(url) {
 
 function findMostRecentUrls() {
   return new Promise((resolve, reject) => {
-    Brochure.find({}).sort({id: -1})
-      .then(brochures => resolve(brochures))
+    Brochure.find({})
+      .then(brochures => {
+        console.log('brochures: ', brochures);
+        resolve(brochures);
+      })
       .catch(err => {
         console.log('something went wrong retrieving MostRecentUrls');
         reject(err);

@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const MongoService = require('./services/mongo');
 
 const app = express();
+const PORT = process.env.PORT || 3001;
 
 const env = process.env.ENVIRONMENT || 'DEVELOPMENT';
 
@@ -61,4 +62,4 @@ app.use('*', (_, res) => {
   res.send('lolwut?');
 });
 
-app.listen(3001);
+app.listen(PORT);

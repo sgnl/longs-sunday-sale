@@ -10,9 +10,11 @@ const brochureSchema = new Schema({
   dateAdded: {
     required: true,
     type: String,
-    default() {
-      return moment().format('MMM Do');
-    }
+    default() { return moment().format('MMM Do YYYY'); }
+  },
+  created_at: {
+    type: Date,
+    default() { return new Date(); }
   }
   // clicks: {type: Number, default: 0} TODO
 });

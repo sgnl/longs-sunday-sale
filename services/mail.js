@@ -10,12 +10,9 @@ const logger = require('./logger');
 
 const SendGridService = SendGrid(CONFIG.SENDGRID.API_KEY);
 
-function getEmailsAndSendNewsletter() {
-  return getAllEmails()
-    .then(sendNewsletter);
-}
+function getEmailsAndSendNewsletter({url}) {
+  if (!url) throw Error('cannot send newsletter withour brochure url');
 
-function getAllEmails() {
   const request = SendGridService.emptyRequest({
     method: 'GET',
     path: '/v3/contactdb/lists/787192/recipients?page_size=1000&page=1'
@@ -25,49 +22,59 @@ function getAllEmails() {
 
   return SendGridService.API(request)
     .then(response => {
-      logger.info('response from sendgrid')
+      logger.info('response from sendgrid', response);
       return response.body.recipients.map(recep => recep.email)
-    });
-}
-
-function sendNewsletter(emails) {
-  SendGridService.API(createNewsletter(emails))
-    .then(response => {
-      console.log(response.statusCode);
-      console.log(response.body);
-      console.log(response.headers);
     })
-    .catch(err => {
-      console.log(err.response.statusCode);
-    });
+    // .then(emails => {
+    //   logger.info('preparing for delivery', {count:emails.length});
+    //   return emails;
+    // })
+    .then(createCampaign(url))
+    .then(campaignId => activateCampaign(campaignId));
 }
 
-function createNewsletter(/* emails */) {
-  return SendGridService.emptyRequest({
+function createCampaign(url) {
+  return (emails) => {
+    logger.info('building new campaign specifications');
+
+    const request = SendGridService.emptyRequest({
+      method: 'POST',
+      path: '/v3/campaigns',
+      body: {
+        title: 'YOUR SUNDAY SALE TITLE',
+        subject: 'Your Sunday Sale newletter has arrived!',
+        sender_id: 98524,
+        list_ids: [
+          787192
+        ],
+        suppression_group_id: 1925,
+        custom_unsubscribe_url: '',
+        html_content: '<html><head><title></title></head><body><p>DA LINK WILL GO HERE</p><a href="[unsubscribe]">Unsubscribe from this newsletter</a></body></html>',
+        plain_content: 'DA LINK WILL GO HERE [unsubscribe]'
+      }
+    });
+
+    return SendGridService.API(request)
+      .then(response => {
+        logger.info('success creating new campaign', response);
+        return response.body.id;
+      });
+  };
+}
+
+function activateCampaign(id) {
+  const request = SendGridService.emptyRequest({
     method: 'POST',
-    path: '/v3/mail/send',
-    body: {
-      personalizations: [
-        {
-          to: [
-            {
-              // email: 'exampleuser@example.com'
-            }
-          ],
-          subject: '{{name}}, Here is your Longs sunday sale PDF, delivered!'
-        }
-      ],
-      from: {
-        email: 'longs-sunday-sale@gmail.com'
-      },
-      content: [
-        {
-          type: 'text/html',
-          value: 'Sunday sale at <a href="{{url}}">this link</a>.'
-        }
-      ]
-    }
+    path: `/v3/campaigns/${id}/schedules/now`
   });
+
+  logger.info('attempting to active campaign', {id});
+
+  return SendGridService.API(request)
+    .then(response => {
+      logger.info('success activating campaign', response);
+      return process.exit(0);
+    });
 }
 
 function send(toSend) {
