@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "cron": "node ./lib/cron.js $(date +'%m%d')",
-    "start": "node index.js",
+    "start": "env $(cat .env) node index.js",
     "test": "xo"
   },
   "keywords": [],
