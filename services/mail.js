@@ -6,24 +6,28 @@ const SendGrid = require('sendgrid');
 
 const CONFIG = require('../config/');
 const MongoService = require('./mongo');
+const logger = require('./logger');
 
 const SendGridService = SendGrid(CONFIG.SENDGRID.API_KEY);
 
 function getEmailsAndSendNewsletter() {
   return getAllEmails()
-    .then(sendNewsletter)
+    .then(sendNewsletter);
 }
 
 function getAllEmails() {
-  return new Promise((resolve, reject) => {
-    const request = SendGridService.emptyRequest({
-      method: 'GET',
-      path: '/v3/contactdb/lists/783410/recipients?page_size=100'
-    });
-    SendGridService.API(request)
-      .then(response => resolve(response.body.recipients.map(recep => recep.email)))
-      .catch(err => reject(err));
+  const request = SendGridService.emptyRequest({
+    method: 'GET',
+    path: '/v3/contactdb/lists/787192/recipients?page_size=1000&page=1'
   });
+
+  logger.info('fetching contacts');
+
+  return SendGridService.API(request)
+    .then(response => {
+      logger.info('response from sendgrid')
+      return response.body.recipients.map(recep => recep.email)
+    });
 }
 
 function sendNewsletter(emails) {
