@@ -9,7 +9,7 @@ const logger = require('./logger');
 
 const SendGridService = SendGrid(CONFIG.SENDGRID.API_KEY);
 
-function getEmailsAndSendNewsletter({url}) {
+function getEmailsAndSendNewsletter({ url }) {
   if (!url) throw Error('cannot send newsletter withour brochure url');
 
   const request = SendGridService.emptyRequest({
@@ -33,7 +33,7 @@ function getEmailsAndSendNewsletter({url}) {
 }
 
 function createCampaign(url) {
-  return (emails) => {
+  return () => {
     logger.info('building new campaign specifications');
 
     const request = SendGridService.emptyRequest({
