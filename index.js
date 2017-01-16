@@ -64,9 +64,14 @@ app.post('/newsletter/unsub', validatePayloadOrQueryParams, (req, res) => {
     });
 });
 
-app.use('*', (_, res) => {
-  res.send('lolwut?');
-});
+app.use(expressWinston.errorLogger({
+  transports: [
+    new winston.transports.Console({
+      json: true,
+      colorize: true
+    })
+  ]
+}));
 
 function validatePayloadOrQueryParams(req, res, next) {
   if (req.method === 'POST' && !{}.hasOwnProperty.call(req.body, 'email')) {
