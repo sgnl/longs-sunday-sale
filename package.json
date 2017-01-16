@@ -32,5 +32,6 @@
     "globals": [
       "window"
     ]
-  }
+  },
+  "repository": "git@github.com:sgnl/longs_sunday_sale.git"
 }
