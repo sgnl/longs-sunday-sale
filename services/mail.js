@@ -5,7 +5,6 @@
 const SendGrid = require('sendgrid');
 
 const CONFIG = require('../config/');
-const MongoService = require('./mongo');
 const logger = require('./logger');
 
 const SendGridService = SendGrid(CONFIG.SENDGRID.API_KEY);
