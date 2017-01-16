@@ -4,35 +4,25 @@ const mongoose = require('mongoose');
 const Promise = require('bluebird');
 
 const CONFIG = require('../config/');
+const logger = require('./logger');
 
 mongoose.connect(`mongodb://${CONFIG.MONGO.USER}:${CONFIG.MONGO.PASSWORD}@${CONFIG.MONGO.URL}`);
 mongoose.Promise = Promise;
 
 const {Brochure, Subscription} = require('../models');
 
-const upsertOptions = {upsert: true, new: true};
-
+// upserts brochure document and then returns it
 function addNewBrochureUrl(url) {
-  return new Promise((resolve, reject) => {
-    const newBrochureURLObject = {url};
+  const newBrochureURLObject = {url};
+  const upsertOptions = {upsert: true, new: true};
 
-    Brochure.findOneAndUpdate(newBrochureURLObject, upsertOptions)
-      .then(doc => {
-        if (doc === null) {
-          const newBrochure = new Brochure(newBrochureURLObject);
+  logger.info('attempting to upsert new brochure url');
 
-          return newBrochure.save()
-            .then(() => resolve(url))
-            .catch(err => console.error(err));
-        }
-        return resolve(`${url} already in database.`);
-      })
-      .catch(err => {
-        // => TODO: alert me!
-        console.log('something went wrong saving brochure to db!: ', err);
-        reject(err);
-      });
-  });
+  return Brochure.findOneAndUpdate(newBrochureURLObject, upsertOptions)
+    .then(doc => {
+      logger.info('brochure document created');
+      return doc;
+    })
 }
 
 function findMostRecentUrls() {
