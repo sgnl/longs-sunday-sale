@@ -3,7 +3,6 @@
 const mongoose = require('mongoose');
 const Promise = require('bluebird');
 
-const CONFIG = require('../config/');
 const logger = require('./logger');
 
 mongoose.connect(`mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_URL}`);
