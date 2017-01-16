@@ -2,7 +2,12 @@
 'use strict';
 const express = require('express');
 const bodyParser = require('body-parser');
-const MongoService = require('./services/mongo');
+const expressWinston = require('express-winston');
+
+const {
+  findMostRecentUrls,
+  addNewSubscription,
+  removeSubscription } = require('./services/mongo');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -18,24 +23,25 @@ if (env === 'DEVELOPMENT') {
 }
 
 app.use(bodyParser.json({extended: true}));
+app.use(expressWinston.logger({
+  transports: [
+    new winston.transports.Console({
+      json: true
+    })
+  ],
+  meta: true,
+  colorize: true,
+  msg: '{{res.statusCode}} {{req.method}} {{req.url}}'
+}));
 
 app.get('/', (req, res) => {
-  MongoService.findMostRecentUrls()
+  findMostRecentUrls()
     .then(brochures => res.render('index', {brochures}))
     .catch(err => res.send(err));
 });
 
-function validatePayloadOrQueryParams(req, res, next) {
-  if (req.method === 'POST' && !{}.hasOwnProperty.call(req.body, 'email')) {
-    return res.status(422).send('nope.');
-  } else if (req.method === 'GET' && !{}.hasOwnProperty.call(req.query, 'email')) {
-    return res.status(422).send('nope.');
-  }
-  return next();
-}
-
 app.post('/newsletter/sub', validatePayloadOrQueryParams, (req, res) => {
-  MongoService.addNewSubscription(req.body.email)
+  addNewSubscription(req.body.email)
     .then(() => {
       res.send('added to the list.');
     })
@@ -48,7 +54,7 @@ app.post('/newsletter/sub', validatePayloadOrQueryParams, (req, res) => {
 
 // change to get with query params for ez-unsub via email link
 app.post('/newsletter/unsub', validatePayloadOrQueryParams, (req, res) => {
-  MongoService.removeSubscription(req.body.email)
+  removeSubscription(req.body.email)
     .then(email => {
       res.send(`${email} has been removed from the mailing list. aloha.`);
     })
@@ -61,5 +67,14 @@ app.post('/newsletter/unsub', validatePayloadOrQueryParams, (req, res) => {
 app.use('*', (_, res) => {
   res.send('lolwut?');
 });
+
+function validatePayloadOrQueryParams(req, res, next) {
+  if (req.method === 'POST' && !{}.hasOwnProperty.call(req.body, 'email')) {
+    return res.status(422).send('nope.');
+  } else if (req.method === 'GET' && !{}.hasOwnProperty.call(req.query, 'email')) {
+    return res.status(422).send('nope.');
+  }
+  return next();
+}
 
 app.listen(PORT);
