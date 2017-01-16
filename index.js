@@ -5,15 +5,13 @@ const bodyParser = require('body-parser');
 const winston = require('winston');
 const expressWinston = require('express-winston');
 
-const {
-  findMostRecentUrls,
-  addNewSubscription,
-  removeSubscription } = require('./services/mongo');
+const logger = require('./services/logger');
+const { findMostRecentUrls } = require('./services/mongo');
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT;
 
-const env = process.env.ENVIRONMENT || 'DEVELOPMENT';
+const env = process.env.ENVIRONMENT;
 
 app.set('view engine', 'pug');
 app.set('views', './views');
@@ -38,29 +36,18 @@ app.get('/', (req, res) => {
     .catch(err => res.send(err));
 });
 
-app.post('/newsletter/sub', validatePayloadOrQueryParams, (req, res) => {
-  addNewSubscription(req.body.email)
-    .then(() => {
-      res.send('added to the list.');
-    })
-    // .then(MailService.sendConfirmationEmail)
-    .catch(err => {
-      console.error('error saving new subscription email ', err);
-      res.status(500);
-    });
-});
-
-// change to get with query params for ez-unsub via email link
-app.post('/newsletter/unsub', validatePayloadOrQueryParams, (req, res) => {
-  removeSubscription(req.body.email)
-    .then(email => {
-      res.send(`${email} has been removed from the mailing list. aloha.`);
-    })
-    .catch(err => {
-      console.error('error removing subscription ', err);
-      res.status(500);
-    });
-});
+// TODO add new sub via sendgrid api
+// app.post('/newsletter/sub', validatePayloadOrQueryParams, (req, res) => {
+//   addNewSubscription(req.body.email)
+//     .then(() => {
+//       res.send('added to the list.');
+//     })
+//     // .then(MailService.sendConfirmationEmail)
+//     .catch(err => {
+//       console.error('error saving new subscription email ', err);
+//       res.status(500);
+//     });
+// });
 
 app.use(expressWinston.errorLogger({
   transports: [
@@ -80,4 +67,4 @@ function validatePayloadOrQueryParams(req, res, next) {
   return next();
 }
 
-app.listen(PORT);
+app.listen(PORT, () => logger.info(`server started on http://localhost:${PORT}`));

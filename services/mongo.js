@@ -6,25 +6,17 @@ const Promise = require('bluebird');
 const CONFIG = require('../config/');
 const logger = require('./logger');
 
-mongoose.connect(`mongodb://${CONFIG.MONGO.USER}:${CONFIG.MONGO.PASSWORD}@${CONFIG.MONGO.URL}`);
+mongoose.connect(`mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_URL}`);
 mongoose.Promise = Promise;
 
 const {Brochure, Subscription} = require('../models');
 
 function findMostRecentUrls() {
-  return new Promise((resolve, reject) => {
-    Brochure.find({})
-      .then(brochures => {
-        console.log('brochures: ', brochures);
-        resolve(brochures);
-      })
-      .catch(err => {
-        console.log('something went wrong retrieving MostRecentUrls');
-        reject(err);
-      });
-  });
+  // TODO make more robust?
+  return Brochure.find({});
 }
 
+// TODO change to add sub via sendgrid api
 function addNewSubscription(email) {
   return new Promise((resolve, reject) => {
     const newSubscription = {email};
@@ -40,6 +32,6 @@ function addNewSubscription(email) {
 }
 
 module.exports = {
-  findMostRecentUrls,
-  addNewSubscription
+  findMostRecentUrls/*,
+  addNewSubscription*/
 };
