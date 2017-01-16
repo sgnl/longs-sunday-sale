@@ -11,20 +11,6 @@ mongoose.Promise = Promise;
 
 const {Brochure, Subscription} = require('../models');
 
-// upserts brochure document and then returns it
-function addNewBrochureUrl(url) {
-  const newBrochureURLObject = {url};
-  const upsertOptions = {upsert: true, new: true};
-
-  logger.info('attempting to upsert new brochure url');
-
-  return Brochure.findOneAndUpdate(newBrochureURLObject, newBrochureURLObject, upsertOptions)
-    .then(doc => {
-      logger.info('brochure document created');
-      return doc;
-    })
-}
-
 function findMostRecentUrls() {
   return new Promise((resolve, reject) => {
     Brochure.find({})
@@ -53,17 +39,7 @@ function addNewSubscription(email) {
   });
 }
 
-function removeSubscription(email) {
-  return new Promise((resolve, reject) => {
-    Subscription.remove(email)
-      .then(() => resolve(email))
-      .catch(err => reject(err));
-  });
-}
-
 module.exports = {
-  addNewBrochureUrl,
   findMostRecentUrls,
-  addNewSubscription,
-  removeSubscription
+  addNewSubscription
 };
