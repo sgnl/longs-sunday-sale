@@ -3,33 +3,31 @@
 /* eslint new-cap: "off" */
 
 const SendGrid = require('sendgrid');
+
 const CONFIG = require('../config/');
 const MongoService = require('./mongo');
 
 const SendGridService = SendGrid(CONFIG.SENDGRID.API_KEY);
 
 function getEmailsAndSendNewsletter() {
-  return new Promise((resolve, reject) => {
-    getAllEmails()
-      .then(sendNewsletter)
-      .catch(reject);
-  });
+  return getAllEmails()
+    .then(sendNewsletter)
 }
 
 function getAllEmails() {
   return new Promise((resolve, reject) => {
-    const request = sg.emptyRequest({
+    const request = SendGridService.emptyRequest({
       method: 'GET',
       path: '/v3/contactdb/lists/783410/recipients?page_size=100'
     });
-    sg.API(request)
+    SendGridService.API(request)
       .then(response => resolve(response.body.recipients.map(recep => recep.email)))
       .catch(err => reject(err));
   });
 }
 
 function sendNewsletter(emails) {
-  sg.API(createNewsletter(emails))
+  SendGridService.API(createNewsletter(emails))
     .then(response => {
       console.log(response.statusCode);
       console.log(response.body);
@@ -41,7 +39,7 @@ function sendNewsletter(emails) {
 }
 
 function createNewsletter(/* emails */) {
-  return sg.emptyRequest({
+  return SendGridService.emptyRequest({
     method: 'POST',
     path: '/v3/mail/send',
     body: {
@@ -72,12 +70,12 @@ function send(toSend) {
   console.log(JSON.stringify(toSend, null, 2));
 
   const requestBody = toSend;
-  const emptyRequest = sg.request;
+  const emptyRequest = SendGridService.request;
   const requestPost = JSON.parse(JSON.stringify(emptyRequest));
   requestPost.method = 'POST';
   requestPost.path = '/v3/mail/send';
   requestPost.body = requestBody;
-  sg.API(requestPost, (error, response) => {
+  SendGridService.API(requestPost, (error, response) => {
     console.log(response.statusCode);
     console.log(response.body);
     console.log(response.headers);
