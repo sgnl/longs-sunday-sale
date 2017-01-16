@@ -2,6 +2,7 @@
 'use strict';
 const express = require('express');
 const bodyParser = require('body-parser');
+const winston = require('winston');
 const expressWinston = require('express-winston');
 
 const {
