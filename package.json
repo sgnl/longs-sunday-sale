@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "env $(cat .env) node index.js",
-    "test": "xo",
+    "test": "xo && ava",
     "deploy:now": "now -e MONGO_USER=@mongo-user -e MONGO_PASSWORD=@mongo-password -e MONGO_URL=@mongo-url"
   },
   "keywords": [],
@@ -24,6 +24,7 @@
     "winston": "^2.3.0"
   },
   "devDependencies": {
+    "ava": "^0.17.0",
     "xo": "^0.17.1"
   },
   "repository": "git@github.com:sgnl/longs_sunday_sale.git",
