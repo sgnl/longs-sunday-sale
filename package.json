@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "cron": "node ./lib/cron.js $(date +'%m%d')",
     "start": "env $(cat .env) node index.js",
-    "test": "xo"
+    "test": "xo",
+    "deploy:now": "now -e MONGO_USER=@mongo-user -e MONGO_PASSWORD=@mongo-password -e MONGO_URL=@mongo-url"
   },
   "keywords": [],
   "author": "Ray Farias <rayrfarias@gmail.com> (http://github.com/sgnl)",
@@ -25,6 +25,20 @@
   },
   "devDependencies": {
     "xo": "^0.17.1"
+  },
+  "repository": "git@github.com:sgnl/longs_sunday_sale.git",
+  "now": {
+    "name": "sundaysale-club",
+    "aliases": [
+      "sundaysale.club"
+    ],
+    "env": {
+      "NODE_ENV": "production"
+    },
+    "type": "npm",
+    "engines": {
+      "node": "7.4.0"
+    }
   },
   "xo": {
     "space": true,
