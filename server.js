@@ -15,16 +15,20 @@ app.set('views', './views');
 
 // otherwise nginx will serve static files in production
 app.use(bodyParser.json());
-app.use(expressWinston.logger({
-  transports: [
-    new winston.transports.Console({
-      json: true
-    })
-  ],
-  meta: true,
-  colorize: true,
-  msg: '{{res.statusCode}} {{req.method}} {{req.url}}'
-}));
+
+if (process.env.ENVIRONMENT !== 'TEST') {
+  app.use(expressWinston.logger({
+    transports: [
+      new winston.transports.Console({
+        json: true
+      })
+    ],
+    meta: true,
+    colorize: true,
+    msg: '{{res.statusCode}} {{req.method}} {{req.url}}'
+  }));
+}
+
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {

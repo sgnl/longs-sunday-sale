@@ -13,7 +13,7 @@ const logger = new winston.Logger({
   exitOnError: false
 });
 
-if (process.env.ENVIRONMENT === 'test') {
+if (process.env.ENVIRONMENT === 'TEST') {
   logger.configure({
     level: 'test',
     transports: []
