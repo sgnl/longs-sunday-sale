@@ -1,5 +1,7 @@
 /* global window, $ */
 
+'use strict';
+
 window.onload = function () {
   const newsletterForm = $('#newsletter-signup');
 
@@ -17,7 +19,7 @@ window.onload = function () {
         'content-type': 'application/json',
         'cache-control': 'no-cache'
       },
-      data: JSON.stringify({email: emailEl.val()})
+      data: JSON.stringify({ email: emailEl.val() })
     };
 
     $.ajax(settings)

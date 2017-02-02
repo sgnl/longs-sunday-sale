@@ -1,20 +1,24 @@
 
+/* eslint
+  camelcase: "off"
+ */
 'use strict';
+
 const mongoose = require('mongoose');
 const moment = require('moment');
 
 const Schema = mongoose.Schema;
 
 const brochureSchema = new Schema({
-  url: {required: true, type: String},
-  dateAdded: {
+  url: { required: true, type: String },
+  date_added: {
     required: true,
     type: String,
-    default() { return moment().format('MMM Do YYYY'); }
+    default: () => moment().format('MMM Do YYYY')
   },
   created_at: {
     type: Date,
-    default() { return new Date(); }
+    default: () => new Date()
   }
 });
 

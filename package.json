@@ -27,11 +27,14 @@
     "xo": "^0.17.1"
   },
   "xo": {
-    "esnext": true,
     "space": true,
-    "globals": [
-      "window"
-    ]
-  },
-  "repository": "git@github.com:sgnl/longs_sunday_sale.git"
+    "rules": {
+      "object-curly-spacing": [
+        "error",
+        "always"
+      ],
+      "new-cap": "off",
+      "no-prototype-builtins": "off"
+    }
+  }
 }
