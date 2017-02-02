@@ -3,7 +3,7 @@
 
 const test = require('ava');
 
-const { findMostRecentUrls } = require('../services/mongo.js');
+const { findMostRecentUrls } = require('../../services/mongo-service');
 
 test('findMostRecentUrls works', async t => {
   const result = await findMostRecentUrls();

@@ -7,12 +7,11 @@ const req = require('supertest');
 
 const app = require('../server');
 
-test('', async t => {
+test('GET `/` ', async t => {
   let res = await req(app).get('/');
   t.is(res.status, 200);
-  // t.pass();
-  // t.regex(res.headers['content-type'], /html/);
-  // t.truthy(res.body);
+  t.regex(res.headers['content-type'], /html/);
+  t.truthy(res.body);
   // const templateHTML = pug.renderFile('./views/enroll.pug');
   // t.is(res.text, templateHTML);
 });

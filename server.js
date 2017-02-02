@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const winston = require('winston');
 const expressWinston = require('express-winston');
 
-const { findMostRecentUrls } = require('./services/mongo');
+const { findMostRecentUrls } = require('./services/mongo-service');
 
 const app = express();
 
