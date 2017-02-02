@@ -14,7 +14,7 @@ app.set('view engine', 'pug');
 app.set('views', './views');
 
 // otherwise nginx will serve static files in production
-app.use(bodyParser.json({ extended: true }));
+app.use(bodyParser.json());
 app.use(expressWinston.logger({
   transports: [
     new winston.transports.Console({
@@ -25,7 +25,7 @@ app.use(expressWinston.logger({
   colorize: true,
   msg: '{{res.statusCode}} {{req.method}} {{req.url}}'
 }));
-app.use(express.static('./public'));
+app.use(express.static('public'));
 
 app.get('/', (req, res) => {
   findMostRecentUrls()

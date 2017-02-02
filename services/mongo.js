@@ -4,15 +4,14 @@
 const mongoose = require('mongoose');
 const Promise = require('bluebird');
 
-// const logger = require('./logger');
+const { Brochure/* , Subscription */ } = require('../models');
+const logger = require('./logger');
 
 mongoose.connect(`mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_URL}`);
 mongoose.Promise = Promise;
 
-const { Brochure/* , Subscription */ } = require('../models');
-
 function findMostRecentUrls() {
-  // make more robust?
+  logger.info('fetching brochures');
   return Brochure.find({}).sort({ dateAdded: -1 });
 }
 

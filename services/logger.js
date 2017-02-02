@@ -13,4 +13,11 @@ const logger = new winston.Logger({
   exitOnError: false
 });
 
+if (process.env.ENVIRONMENT === 'test') {
+  logger.configure({
+    level: 'test',
+    transports: []
+  });
+}
+
 module.exports = logger;
