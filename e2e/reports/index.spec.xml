@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="1"
+            failures="0"
+            tests="1">
+
+  <testsuite name="index.spec"
+    errors="1" failures="0" hostname="" id="" package="index.spec" skipped="0"
+    tests="1" time="0.06000" timestamp="Thu, 02 Feb 2017 23:43:25 GMT">
+  
+    <testcase name="Demo test Google" time="0.06000" assertions="0">
+    </testcase>
+      <system-err>
+          Error while running [Index Spec / Demo test Google]:
+
+  MongoError: failed to connect to server [undefined:27017] on first connect
+    at Pool.&lt;anonymous&gt; (/Users/weevil/code/javascript/longs_sunday_sale/node_modules/mongodb-core/lib/topologies/server.js:326:35)
+    at emitOne (events.js:96:13)
+    at Pool.emit (events.js:188:7)
+    at Connection.&lt;anonymous&gt; (/Users/weevil/code/javascript/longs_sunday_sale/node_modules/mongodb-core/lib/connection/pool.js:272:12)
+    at Object.onceWrapper (events.js:290:19)
+    at emitTwo (events.js:106:13)
+    at Connection.emit (events.js:191:7)
+    at Socket.&lt;anonymous&gt; (/Users/weevil/code/javascript/longs_sunday_sale/node_modules/mongodb-core/lib/connection/connection.js:175:49)
+    at Object.onceWrapper (events.js:290:19)
+    at emitOne (events.js:96:13)
+    at Socket.emit (events.js:188:7)
+    at connectErrorNT (net.js:1025:8)
+    at _combinedTickCallback (internal/process/next_tick.js:74:11)
+    at process._tickCallback (internal/process/next_tick.js:98:9)
+      </system-err>
+  
+  
+  </testsuite>
+</testsuites>

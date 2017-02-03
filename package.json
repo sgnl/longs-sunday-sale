@@ -6,6 +6,7 @@
   "scripts": {
     "start": "env $(cat .env) node index.js",
     "test": "xo && env $(cat test/helpers/test.env) ava",
+    "test:e2e": "env $(cat test/helpers/test.env) nightwatch",
     "deploy:now": "now -e MONGO_USER=@mongo-user -e MONGO_PASSWORD=@mongo-password -e MONGO_URL=@mongo-url"
   },
   "keywords": [],
@@ -24,7 +25,9 @@
     "winston": "^2.3.0"
   },
   "devDependencies": {
+    "chromedriver": "^2.27.2",
     "ava": "^0.17.0",
+    "nightwatch": "^0.9.12",
     "supertest": "^3.0.0",
     "xo": "^0.17.1"
   },
