@@ -29,19 +29,6 @@
     "xo": "^0.17.1"
   },
   "repository": "git@github.com:sgnl/longs_sunday_sale.git",
-  "now": {
-    "name": "sundaysale-club",
-    "aliases": [
-      "sundaysale.club"
-    ],
-    "env": {
-      "NODE_ENV": "production"
-    },
-    "type": "npm",
-    "engines": {
-      "node": "7.4.0"
-    }
-  },
   "xo": {
     "space": true,
     "rules": {
