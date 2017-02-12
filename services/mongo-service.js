@@ -12,7 +12,7 @@ mongoose.Promise = Promise;
 
 function findMostRecentUrls() {
   logger.info('fetching brochures');
-  return Brochure.find({}).sort({ dateAdded: -1 });
+  return Brochure.find({}).sort({ created_at: -1 });
 }
 
 // change to add sub via sendgrid api
