@@ -6,7 +6,7 @@
   "scripts": {
     "start": "env $(cat .env) node index.js",
     "test": "xo && env $(cat test/helpers/test.env) ava",
-    "deploy:now": "now -e MONGO_USER=@mongo-user -e MONGO_PASSWORD=@mongo-password -e MONGO_URL=@mongo-url"
+    "deploy:now": "now -e MONGO_USER=@mongo-user -e MONGO_PASSWORD=@mongo-password -e MONGO_URL=@mongo-url -e ENVIRONMENT=PRODUCTION"
   },
   "keywords": [],
   "author": "Ray Farias <rayrfarias@gmail.com> (http://github.com/sgnl)",
