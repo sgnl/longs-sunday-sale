@@ -1,9 +1,6 @@
 {
   "name": "longs-sunday-sale",
   "alias": "sundaysale.club",
-  "env": {
-    "NODE_ENV": "production"
-  },
   "type": "npm",
   "engines": {
     "node": "7.4.0"
