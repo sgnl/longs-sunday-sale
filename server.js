@@ -7,14 +7,15 @@ const winston = require('winston');
 const expressWinston = require('express-winston');
 
 const { findMostRecentUrls } = require('./services/mongo-service');
+const { addNewSubscription } = require('./services/sendgrid-service');
+const logger = require('./services/logger');
 
 const app = express();
 
 app.set('view engine', 'pug');
 app.set('views', './views');
 
-// otherwise nginx will serve static files in production
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded());
 
 if (process.env.ENVIRONMENT !== 'TEST') {
   app.use(expressWinston.logger({
@@ -29,6 +30,7 @@ if (process.env.ENVIRONMENT !== 'TEST') {
   }));
 }
 
+// otherwise nginx will serve static files in production
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
@@ -38,17 +40,17 @@ app.get('/', (req, res) => {
 });
 
 // add new sub via sendgrid api
-// app.post('/newsletter/sub', validatePayloadOrQueryParams, (req, res) => {
-//   addNewSubscription(req.body.email)
-//     .then(() => {
-//       res.send('added to the list.');
-//     })
-//     // .then(MailService.sendConfirmationEmail)
-//     .catch(err => {
-//       console.error('error saving new subscription email ', err);
-//       res.status(500);
-//     });
-// });
+app.post('/newsletter/sub', validatePayloadOrQueryParams, (req, res) => {
+  logger.info('new subscription request received');
+
+  return addNewSubscription(req.body.email)
+    .then(() => res.send('success'))
+    // .then(MailService.sendConfirmationEmail)
+    .catch(err => {
+      console.error('error saving new subscription email ', err);
+      res.status(500);
+    });
+});
 
 app.use(expressWinston.errorLogger({
   transports: [
@@ -59,13 +61,13 @@ app.use(expressWinston.errorLogger({
   ]
 }));
 
-// function validatePayloadOrQueryParams(req, res, next) {
-//   if (req.method === 'POST' && !{}.hasOwnProperty.call(req.body, 'email')) {
-//     return res.status(422).send('nope.');
-//   } else if (req.method === 'GET' && !{}.hasOwnProperty.call(req.query, 'email')) {
-//     return res.status(422).send('nope.');
-//   }
-//   return next();
-// }
+function validatePayloadOrQueryParams(req, res, next) {
+  if (req.method === 'POST' && !{}.hasOwnProperty.call(req.body, 'email')) {
+    return res.status(422).send('nope.');
+  } else if (req.method === 'GET' && !{}.hasOwnProperty.call(req.query, 'email')) {
+    return res.status(422).send('nope.');
+  }
+  return next();
+}
 
 module.exports = app;

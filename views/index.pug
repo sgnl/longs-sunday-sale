@@ -4,29 +4,32 @@ html(lang='en')
 head
   meta(charset='UTF-8')
   title Long's/CVS Sunday Sale!!!
-  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css')
-  link(rel='stylesheet' href='/css/styles.css')
+  link(href="/css/styles.css")
 body
-  .container.center-align.white-text
-    header.section
+  .container
+    header
       h1 long's sunday sale
 
-    content#main.section
+    section#main
       ul.collection
         each brochure in brochures
           li
-            a.black-text(target='_blank' href=`${brochure.url}` class='collection-item')= `${brochure.date_added} : ${brochure.url}`
+            a(target='_blank' href=`${brochure.url}`)= `${brochure.date_added} : ${brochure.url}`
 
-    .section
-      .row
-        .col.s12.m4.offset-m2.l6.offset-l3
-          form#newsletter-signup
-            input#email.center-align(required name='email' type='email' placeholder='sign up for the newsletter' value="")
-            input.btn.white.black-text(type='submit' value='sign me up!')
+    section
+      form(
+        method='POST'
+        action='/newsletter/sub'
+        enctype='application/x-www-form-urlencoded'
+        autocomplete)
 
-    footer
+        input#email(
+          required
+          name='email'
+          type='email'
+          placeholder='sign up for the newsletter')
+
+        input(type='submit' value='subscribe')
+
+      footer
       p 2016 created by rayfarias
-
-  script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js')
-  script(src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js')
-  script(src='/js/client.js')
