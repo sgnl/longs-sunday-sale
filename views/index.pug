@@ -1,39 +1,27 @@
+extends layout/main
 
-html(lang='en')
-  head
-    title Long's/CVS Sunday Sale!!!
-    meta(charset='UTF-8')
-    link(href='https://fonts.googleapis.com/css?family=Open+Sans:300|Roboto' rel='stylesheet')
-    link(href='/css/styles.css' rel='stylesheet')
-  body
-    .container
-      header.header
-        h1.copy.copy--uppercase.emoji--rainbow long&apos;s sunday sale
+block content
+  each brochure in brochures
+    section.section
+      a.link(href=`${brochure.url}` target='_blank')
+        h2.copy.copy--capitalize.copy--bottom-border.emoji--envelope= brochure.date_added
+      p.copy.copy--lowercase.copy--centered.copy--fainter most recent brochure
 
-      each brochure in brochures
-        section.section
-          a.link(href=`${brochure.url}` target='_blank')
-            h2.copy.copy--capitalize.copy--bottom-border.emoji--envelope= brochure.date_added
-          p.copy.copy--lowercase.copy--centered.copy--fainter most recent brochure
+  section.section
+    h4.copy.copy--faint enter your email to get the newsletter
+    form.form(
+      method='POST'
+      action='/newsletter/sub'
+      enctype='application/x-www-form-urlencoded'
+      autocomplete)
 
-      section.section
-        h4.copy.copy--faint enter your email to get the newsletter
-        form.form(
-          method='POST'
-          action='/newsletter/sub'
-          enctype='application/x-www-form-urlencoded'
-          autocomplete)
+      input.form__email(
+        required
+        name='email'
+        type='email'
+        placeholder='📬 👍')
 
-          input.form__email(
-            required
-            name='email'
-            type='email'
-            placeholder='📬 👍')
+      button.form__submit.copy--uppercase.copy--faint subscribe
 
-          button.form__submit.copy--uppercase.copy--faint subscribe
-
-      section.section
-          a.link.emoji--link.copy.copy--bottom-border(href='/previous-longs-cvs-sale-brochures') previous brochures
-
-      footer.section.footer
-        p.copy.copy--centered 🐇
+  section.section
+      a.link.emoji--link.copy.copy--bottom-border(href='/previous-longs-cvs-sale-brochures') previous brochures
