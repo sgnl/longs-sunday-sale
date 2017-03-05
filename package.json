@@ -6,6 +6,7 @@
   "scripts": {
     "css:build": "postcss styles/main.css -u autoprefixer -u cssnano -o public/css/styles.css",
     "start": "env $(cat .env) node index.js",
+    "dev": "npm run start & npm run css:build -- -w",
     "test": "xo && env $(cat test/helpers/test.env) ava",
     "deploy:now": "now -e MONGO_USER=@mongo-user -e MONGO_PASSWORD=@mongo-password -e MONGO_URL=@mongo-url -e SENDGRID_API_KEY=@sendgrid-api-key -e ENVIRONMENT=PRODUCTION"
   },
