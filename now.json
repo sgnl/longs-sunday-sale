@@ -3,6 +3,6 @@
   "alias": "sundaysale.club",
   "type": "npm",
   "engines": {
-    "node": "7.4.0"
+    "node": "7.6.0"
   }
 }

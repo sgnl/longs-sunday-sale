@@ -1,0 +1,11 @@
+extends layout/main
+
+block content
+  section.section
+    h2.copy.copy--capitalize.emoji--envelope PAST
+
+  section.section
+    ul.list
+      each brochure in brochures
+        li.list__item
+          a.link.copy.copy--bottom-border(href=`${brochure.url}`)= brochure.date_added

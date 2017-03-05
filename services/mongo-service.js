@@ -2,7 +2,7 @@
 'use strict';
 
 /* eslint
-   camelcase: "off"
+  camelcase: "off"
 */
 
 const mongoose = require('mongoose');
@@ -15,10 +15,15 @@ const logger = require('./logger');
 mongoose.connect(`mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_URL}`);
 mongoose.Promise = Promise;
 
-function findMostRecentUrls() {
-  logger.info('fetching brochures');
+const getRecentBrochure = () => {
+  logger.info('retrieving recent brochure');
   return Brochure.find({}).sort({ created_at: -1}).limit(1);
-}
+};
 
-module.exports = { findMostRecentUrls };
+const getAllBrochures = () => {
+  logger.info('retrieving all brochures');
+  return Brochure.find({}).sort({ created_at: -1 });
+};
+
+module.exports = { getRecentBrochure, getAllBrochures };
 

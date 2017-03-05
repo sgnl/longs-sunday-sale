@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const winston = require('winston');
 const expressWinston = require('express-winston');
 
-const { findMostRecentUrls } = require('./services/mongo-service');
+const { getRecentBrochure, getAllBrochures } = require('./services/mongo-service');
 const { addNewSubscription } = require('./services/sendgrid-service');
 const logger = require('./services/logger');
 
@@ -34,9 +34,14 @@ if (process.env.ENVIRONMENT !== 'TEST') {
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
-  findMostRecentUrls()
+  getRecentBrochure()
     .then(brochures => res.render('index', { brochures }))
     .catch(err => res.send(err));
+});
+
+app.get('/previous-longs-cvs-sale-brochures', (req, res) => {
+  getAllBrochures()
+    .then(brochures => res.render('past', { brochures: brochures.slice(1) }));
 });
 
 // add new sub via sendgrid api
