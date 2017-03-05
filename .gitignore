@@ -1,4 +1,6 @@
 config/
+public/css/
+
 node_modules/
 *.env
 .DS_Store
