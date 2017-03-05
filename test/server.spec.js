@@ -12,6 +12,6 @@ test('GET `/` ', async t => {
   t.is(res.status, 200);
   t.regex(res.headers['content-type'], /html/);
   t.truthy(res.body);
-  // const templateHTML = pug.renderFile('./views/enroll.pug');
+  // const templateHTML = pug.renderFile('./views/index.pug');
   // t.is(res.text, templateHTML);
 });
