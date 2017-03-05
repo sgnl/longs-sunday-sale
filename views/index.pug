@@ -8,17 +8,16 @@ html(lang='en')
   body
     .container
       header.header
-        h1.copy.copy--uppercase long&apos;s sunday sale
+        h1.copy.copy--uppercase.emoji--rainbow long&apos;s sunday sale
+
+      each brochure in brochures
+        section.section
+          a.link(href=`${brochure.url}` target='_blank')
+            h2.copy.copy--capitalize.copy--bottom-border.emoji--envelope= brochure.date_added
+          p.copy.copy--lowercase.copy--centered.copy--fainter most recent brochure
 
       section.section
-        p.copy.copy--uppercase.copy--underlined recent brochures
-        ul.list
-          each brochure in brochures
-            li.list__item
-              a.copy.copy--link(href=`${brochure.url}` target='_blank')= brochure.date_added
-
-      section.section
-        p.copy Enter your email to get the newsletter
+        h4.copy.copy--faint enter your email to get the newsletter
         form.form(
           method='POST'
           action='/newsletter/sub'
@@ -29,9 +28,12 @@ html(lang='en')
             required
             name='email'
             type='email'
-            placeholder='enter your email here')
+            placeholder='📬 👍')
 
-          button.form__submit subscribe
+          button.form__submit.copy--uppercase.copy--faint subscribe
 
-      footer.footer
-        p 2016 created by rayfarias
+      section.section
+          a.link.emoji--link.copy.copy--bottom-border(href='/previous-longs-cvs-sale-brochures') previous brochures
+
+      footer.section.footer
+        p.copy.copy--centered 🐇

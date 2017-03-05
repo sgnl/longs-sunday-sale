@@ -17,7 +17,7 @@ mongoose.Promise = Promise;
 
 function findMostRecentUrls() {
   logger.info('fetching brochures');
-  return Brochure.find({}).sort({ created_at: -1 });
+  return Brochure.find({}).sort({ created_at: -1}).limit(1);
 }
 
 module.exports = { findMostRecentUrls };

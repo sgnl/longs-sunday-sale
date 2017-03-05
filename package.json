@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "css:build": "postcss styles/main.css -u postcss-nested -u autoprefixer -u cssnano -o public/css/styles.css",
+    "css:build": "postcss styles/main.css -u postcss-nested -u postcss-extend -u autoprefixer -u cssnano -o public/css/styles.css",
     "start": "env $(cat .env) node index.js",
     "dev": "env $(cat .env) nodemon index.js & npm run css:build -- -w",
     "test": "xo && env $(cat test/helpers/test.env) ava",
@@ -30,6 +30,7 @@
     "ava": "^0.17.0",
     "cssnano": "^3.10.0",
     "postcss-cli": "^3.0.0-beta",
+    "postcss-extend": "^1.0.5",
     "postcss-nested": "^1.0.0",
     "supertest": "^3.0.0",
     "xo": "^0.17.1"
