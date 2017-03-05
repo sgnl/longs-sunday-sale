@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "css:build": "postcss styles/main.css -u autoprefixer -u cssnano -o public/css/styles.css",
+    "css:build": "postcss styles/main.css -u postcss-nested -u autoprefixer -u cssnano -o public/css/styles.css",
     "start": "env $(cat .env) node index.js",
-    "dev": "npm run start & npm run css:build -- -w",
+    "dev": "env $(cat .env) nodemon index.js & npm run css:build -- -w",
     "test": "xo && env $(cat test/helpers/test.env) ava",
     "deploy:now": "now -e MONGO_USER=@mongo-user -e MONGO_PASSWORD=@mongo-password -e MONGO_URL=@mongo-url -e SENDGRID_API_KEY=@sendgrid-api-key -e ENVIRONMENT=PRODUCTION"
   },
@@ -30,6 +30,7 @@
     "ava": "^0.17.0",
     "cssnano": "^3.10.0",
     "postcss-cli": "^3.0.0-beta",
+    "postcss-nested": "^1.0.0",
     "supertest": "^3.0.0",
     "xo": "^0.17.1"
   },
