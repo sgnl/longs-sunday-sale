@@ -52,6 +52,10 @@ app.post('/newsletter/sub', validatePayloadOrQueryParams, (req, res) => {
     });
 });
 
+app.get('/thank-you', (req, res) => {
+  res.render('thank-you');
+});
+
 app.use(expressWinston.errorLogger({
   transports: [
     new winston.transports.Console({
