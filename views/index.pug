@@ -1,35 +1,37 @@
 
-<!DOCTYPE html>
 html(lang='en')
-head
-  meta(charset='UTF-8')
-  title Long's/CVS Sunday Sale!!!
-  link(href="/css/styles.css")
-body
-  .container
-    header
-      h1 long's sunday sale
+  head
+    title Long's/CVS Sunday Sale!!!
+    meta(charset='UTF-8')
+    link(href='https://fonts.googleapis.com/css?family=Open+Sans:300|Roboto' rel='stylesheet')
+    link(href='/css/styles.css' rel='stylesheet')
+  body
+    .container
+      header.header
+        h1.copy.copy--uppercase long&apos;s sunday sale
 
-    section#main
-      ul.collection
-        each brochure in brochures
-          li
-            a(target='_blank' href=`${brochure.url}`)= `${brochure.date_added} : ${brochure.url}`
+      section.section
+        p.copy.copy--uppercase.copy--underlined recent brochures
+        ul.list
+          each brochure in brochures
+            li.list__item
+              a.copy.copy--link(href=`${brochure.url}` target='_blank')= brochure.date_added
 
-    section
-      form(
-        method='POST'
-        action='/newsletter/sub'
-        enctype='application/x-www-form-urlencoded'
-        autocomplete)
+      section.section
+        p.copy Enter your email to get the newsletter
+        form.form(
+          method='POST'
+          action='/newsletter/sub'
+          enctype='application/x-www-form-urlencoded'
+          autocomplete)
 
-        input#email(
-          required
-          name='email'
-          type='email'
-          placeholder='sign up for the newsletter')
+          input.form__email(
+            required
+            name='email'
+            type='email'
+            placeholder='enter your email here')
 
-        input(type='submit' value='subscribe')
+          button.form__submit subscribe
 
-      footer
-      p 2016 created by rayfarias
+      footer.footer
+        p 2016 created by rayfarias
