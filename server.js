@@ -15,7 +15,7 @@ const app = express();
 app.set('view engine', 'pug');
 app.set('views', './views');
 
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 if (process.env.ENVIRONMENT !== 'TEST') {
   app.use(expressWinston.logger({
