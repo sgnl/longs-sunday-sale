@@ -17,7 +17,7 @@ mongoose.Promise = Promise;
 
 const getRecentBrochure = () => {
   logger.info('retrieving recent brochure');
-  return Brochure.find({}).sort({ created_at: -1}).limit(1);
+  return Brochure.find({}).sort({ created_at: -1 }).limit(1);
 };
 
 const getAllBrochures = () => {

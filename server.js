@@ -6,9 +6,13 @@ const bodyParser = require('body-parser');
 const winston = require('winston');
 const expressWinston = require('express-winston');
 
-const { getRecentBrochure, getAllBrochures } = require('./services/mongo-service');
-const { addNewSubscription } = require('./services/sendgrid-service');
 const logger = require('./services/logger');
+const { getRecentBrochure, getAllBrochures } = require('./services/mongo-service');
+const {
+  addNewSubscription,
+  addRecipientToSubscriptionList,
+  sendConfirmationEmail
+} = require('./services/sendgrid-service');
 
 const app = express();
 
@@ -40,7 +44,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/previous-longs-cvs-sale-brochures', (req, res) => {
-  getAllBrochures()
+  return getAllBrochures()
     .then(brochures => res.render('past', { brochures: brochures.slice(1) }));
 });
 
@@ -49,8 +53,12 @@ app.post('/newsletter/sub', validatePayloadOrQueryParams, (req, res) => {
   logger.info('new subscription request received');
 
   return addNewSubscription(req.body.email)
+    .then(response => addRecipientToSubscriptionList(response.body.persisted_recipients))
+    .then(() => getRecentBrochure())
+    .then(brochures => {
+      return sendConfirmationEmail(req.body.email, brochures.shift());
+    })
     .then(() => res.send('success'))
-    // .then(MailService.sendConfirmationEmail)
     .catch(err => {
       console.error('error saving new subscription email ', err);
       res.status(500);
