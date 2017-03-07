@@ -58,7 +58,7 @@ app.post('/newsletter/sub', validatePayloadOrQueryParams, (req, res) => {
     .then(brochures => {
       return sendConfirmationEmail(req.body.email, brochures.shift());
     })
-    .then(() => res.send('success'))
+    .then(() => res.redirect('/thank-you'))
     .catch(err => {
       console.error('error saving new subscription email ', err);
       res.status(500);
@@ -66,7 +66,7 @@ app.post('/newsletter/sub', validatePayloadOrQueryParams, (req, res) => {
 });
 
 app.get('/thank-you', (req, res) => {
-  res.render('thank-you');
+  return res.render('thank-you');
 });
 
 app.use(expressWinston.errorLogger({
