@@ -41,11 +41,16 @@ body {
 
 .section {
   margin: 2em 0;
+  max-width: 700px;
 
   &--border {
     padding: 2em;
     border: 1px solid #ddd;
   }
+}
+
+.article {
+  padding: 1.5em 0;
 }
 
 .link {
@@ -55,6 +60,7 @@ body {
 .copy {
   @extend %reset;
   color: #fff;
+  font-weight: 300;
 
   &--faint {
     color: hsla(0,0%,100%, 0.5);
@@ -145,6 +151,14 @@ body {
 
   &--link {
     &::before, &::after { content: ' 🔗 '; }
+  }
+}
+
+.why {
+  list-style-type: none;
+
+  &__reason {
+    padding: 1.5em 0;
   }
 }
 

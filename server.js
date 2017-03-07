@@ -43,9 +43,17 @@ app.get('/', (req, res) => {
     .catch(err => res.send(err));
 });
 
+app.get('/why', (req, res) => {
+  return res.render('why');
+});
+
+app.get('/thank-you', (req, res) => {
+  return res.render('thank-you');
+});
+
 app.get('/previous-longs-cvs-sale-brochures', (req, res) => {
   return getAllBrochures()
-    .then(brochures => res.render('past', { brochures: brochures.slice(1) }));
+    .then(brochures => res.render('past', { brochures: brochures }));
 });
 
 // add new sub via sendgrid api
@@ -63,10 +71,6 @@ app.post('/newsletter/sub', validatePayloadOrQueryParams, (req, res) => {
       console.error('error saving new subscription email ', err);
       res.status(500);
     });
-});
-
-app.get('/thank-you', (req, res) => {
-  return res.render('thank-you');
 });
 
 app.use(expressWinston.errorLogger({
