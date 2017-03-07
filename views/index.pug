@@ -1,11 +1,10 @@
 extends layout/main
 
 block content
-  each brochure in brochures
-    section.section
-      a.link(href=`${brochure.url}` target='_blank')
-        h2.copy.copy--capitalize.copy--bottom-border.emoji--envelope= brochure.date_added
-      p.copy.copy--lowercase.copy--centered.copy--fainter most recent brochure
+  section.section
+    a.link(href=`${brochure.url}` target='_blank')
+      h2.copy.copy--capitalize.copy--bottom-border.emoji--envelope= brochure.date_added
+    p.copy.copy--lowercase.copy--centered.copy--fainter most recent brochure
 
   section.section
     h4.copy.copy--faint enter your email to get the newsletter

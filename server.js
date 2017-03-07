@@ -34,8 +34,8 @@ if (process.env.ENVIRONMENT !== 'TEST') {
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
-  getRecentBrochure()
-    .then(brochures => res.render('index', { brochures }))
+  return getRecentBrochure()
+    .then(brochures => res.render('index', { brochure: brochures.shift() }))
     .catch(err => res.send(err));
 });
 
