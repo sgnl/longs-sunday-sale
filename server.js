@@ -39,7 +39,7 @@ app.use(express.static('public'));
 
 app.get('/', (req, res) => {
   return getRecentBrochures()
-    .then(brochures => res.render('index', { brochures, date_added: brochures.shift().date_added }))
+    .then(brochures => res.render('index', { brochures, date_added: brochures.concat().shift().date_added }))
     .catch(err => res.send(err));
 });
 
@@ -49,11 +49,6 @@ app.get('/why', (req, res) => {
 
 app.get('/thank-you', (req, res) => {
   return res.render('thank-you');
-});
-
-app.get('/previous-longs-cvs-sale-brochures', (req, res) => {
-  return getAllBrochures()
-    .then(brochures => res.render('past', { brochures: brochures }));
 });
 
 // add new sub via sendgrid api

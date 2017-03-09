@@ -1,8 +1,5 @@
 extends layout/main
-
-mixin article(data)
-  a(href=`${data.url}` target='_blank').link
-    h2.copy.copy--uppercase.copy--underlined.copy--bottom-border= data.island
+include mixins/index
 
 block content
   section.section.grid
@@ -26,6 +23,3 @@ block content
         placeholder='📬 enter your email here 👍')
 
       button.form__submit.copy--uppercase.copy--faint subscribe
-
-  section.section
-      a.link.emoji--link.copy.copy--faint.copy--bottom-border-faint(href='/previous-longs-cvs-sale-brochures') previous brochures
