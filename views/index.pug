@@ -3,13 +3,16 @@ include mixins/index
 
 block content
   section.section.grid
-    h2.grid.grid--centered= date_added
+    header.header.header--shorter-bottom.grid--centered.grid--columns
+      h2= date_added
+      p.copy.copy--faint.copy--small click the name of an island to view it&apos;s brochure
     each brochure in brochures
       article.article
         +article(brochure)
 
   section.section
-    h4.copy.copy--faint get the brochure sent to your email weekly
+    header.header.header--shorter-bottom
+      h4.copy.copy--faint get the brochure sent to your email weekly
     form.form(
       method='POST'
       action='/newsletter/sub'

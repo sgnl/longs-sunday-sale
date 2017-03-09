@@ -28,6 +28,10 @@ body {
   margin: 3em;
   font-family: 'Roboto', sans-serif;
 
+  &--shorter-bottom {
+    margin-bottom: 1em;
+  }
+
   h1 {
     @extend %reset;
     font-size: 2em;
@@ -63,6 +67,10 @@ body {
     align-item: center;
     width: 100%;
   }
+
+  &--columns {
+    flex-flow: column nowrap;
+  }
 }
 
 .article {
@@ -76,6 +84,7 @@ body {
 .copy {
   @extend %reset;
   color: #fff;
+  font-family: 'Open Sans', sans-serif;
   font-weight: 300;
 
   &--faint {
