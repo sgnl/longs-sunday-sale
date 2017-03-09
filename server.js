@@ -7,7 +7,7 @@ const winston = require('winston');
 const expressWinston = require('express-winston');
 
 const logger = require('./services/logger');
-const { getRecentBrochure, getAllBrochures } = require('./services/mongo-service');
+const { getRecentBrochures, getAllBrochures } = require('./services/mongo-service');
 const {
   addNewSubscription,
   addRecipientToSubscriptionList,
@@ -38,8 +38,8 @@ if (process.env.ENVIRONMENT !== 'TEST') {
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
-  return getRecentBrochure()
-    .then(brochures => res.render('index', { brochure: brochures.shift() }))
+  return getRecentBrochures()
+    .then(brochures => res.render('index', { brochures, date_added: brochures.shift().date_added }))
     .catch(err => res.send(err));
 });
 

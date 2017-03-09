@@ -37,6 +37,11 @@ body {
     @extend %reset;
     font-size: 1.5em;
   }
+
+  h3 {
+    @extend %reset;
+    font-size: 1.25em;
+  }
 }
 
 .section {
@@ -46,6 +51,17 @@ body {
   &--border {
     padding: 2em;
     border: 1px solid #ddd;
+  }
+}
+
+.grid {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+
+  &--centered {
+    align-item: center;
+    width: 100%;
   }
 }
 

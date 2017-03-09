@@ -15,9 +15,9 @@ const logger = require('./logger');
 mongoose.connect(`mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_URL}`);
 mongoose.Promise = Promise;
 
-const getRecentBrochure = () => {
+const getRecentBrochures= () => {
   logger.info('retrieving recent brochure');
-  return Brochure.find({}).sort({ created_at: -1 }).limit(1);
+  return Brochure.find({}).sort({ created_at: -1 }).limit(5);
 };
 
 const getAllBrochures = () => {
@@ -25,5 +25,5 @@ const getAllBrochures = () => {
   return Brochure.find({}).sort({ created_at: -1 });
 };
 
-module.exports = { getRecentBrochure, getAllBrochures };
+module.exports = { getRecentBrochures, getAllBrochures };
 

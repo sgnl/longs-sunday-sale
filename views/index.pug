@@ -1,10 +1,15 @@
 extends layout/main
 
+mixin article(data)
+  a(href=`${data.url}` target='_blank').link
+    h2.copy.copy--uppercase.copy--underlined.copy--bottom-border= data.island
+
 block content
-  section.section
-    a.link(href=`${brochure.url}` target='_blank')
-      h2.copy.copy--capitalize.copy--bottom-border.emoji--envelope= brochure.date_added
-    p.copy.copy--lowercase.copy--centered.copy--fainter most recent brochure
+  section.section.grid
+    h2.grid.grid--centered= date_added
+    each brochure in brochures
+      article.article
+        +article(brochure)
 
   section.section
     h4.copy.copy--faint get the brochure sent to your email weekly
