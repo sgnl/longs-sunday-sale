@@ -57,7 +57,7 @@ app.post('/newsletter/sub', validatePayloadOrQueryParams, (req, res) => {
 
   return addNewSubscription(req.body.email)
     .then(response => addRecipientToSubscriptionList(response.body.persisted_recipients))
-    .then(() => getRecentBrochure())
+    .then(() => getRecentBrochures())
     .then(brochures => {
       return sendConfirmationEmail(req.body.email, brochures.shift());
     })
