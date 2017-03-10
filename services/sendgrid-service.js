@@ -1,11 +1,17 @@
 
 'use strict';
 
+/* eslint camelcase: "off" */
+
+const path = require('path');
 const SendGrid = require('sendgrid');
+const { compileFile } = require('pug');
 
 const logger = require('./logger');
 
 const SendGridService = SendGrid(process.env.SENDGRID_API_KEY);
+
+const welcomeEmailTemplate = compileFile(path.resolve(__dirname, '../views/newsletter/welcome-email.pug'));
 
 const addRecipientToSubscriptionList = id => {
   logger.info('moving new recipient email to subscription list on sendgrid service');
@@ -41,44 +47,45 @@ const addNewSubscription = newSubscription => {
     });
 };
 
-const sendConfirmationEmail = (email, brochure) => {
-  // logger.info('sending confirmation email', { email, brochure });
-  const request = SendGridService.emptyRequest({
-    method: 'POST',
-    path: '/v3/mail/send',
-    body: {
-      template_id: '4317950f-cc88-440a-a540-9edbfe626210',
-      personalizations: [
-        {
-          to: [
-            {
-              email: email
-            }
-          ],
-          substitutions: {
-            '-brochure-': brochure.url
-          }
-        }
-      ],
-      from: {
-        email: 'sundaysalenewsletter@gmail.com',
-        name: 'Sunday Sale Newsletter'
-      },
-      subject: 'welcome',
-      content: [
-        {
-          type: 'text/plain',
-          value: 'Hello, Email!'
-        }
-      ]
-    }
-  });
+const sendConfirmationEmail = (email, brochures) => {
+  logger.info('sending confirmation email');
 
-  return SendGridService.API(request)
-    .then(response => {
-      logger.info('success sending confirmation email');
-      return response;
-    });
+  const welcomeEmailHTML = welcomeEmailTemplate({ brochures });
+
+  console.log('welcomeEmailHTML: ', welcomeEmailHTML);
+
+  // const request = SendGridService.emptyRequest({
+  //   method: 'POST',
+  //   path: '/v3/mail/send',
+  //   body: {
+  //     personalizations: [
+  //       {
+  //         to: [
+  //           {
+  //             email: 'rayrfarias@gmail.com'
+  //           }
+  //         ]
+  //       }
+  //     ],
+  //     from: {
+  //       email: 'sundaysalenewsletter@gmail.com',
+  //       name: 'Sunday Sale Newsletter'
+  //     },
+  //     subject: 'welcome',
+  //     content: [
+  //       {
+  //         type: 'text/html',
+  //         value: welcomeEmailHTML
+  //       }
+  //     ]
+  //   }
+  // });
+
+  // return SendGridService.API(request)
+  //   .then(response => {
+  //     logger.info('success sending confirmation email');
+  //     return response;
+  //   });
 };
 
 module.exports = {

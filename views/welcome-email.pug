@@ -1,0 +1,13 @@
+
+doctype html
+html(lang='en')
+  head
+    link(href='https://fonts.googleapis.com/css?family=Open+Sans:300%7CRoboto' rel='stylesheet')
+    link(href='/css/email.css' rel='stylesheet')
+  body
+    h1 It&apos;s that time again, SUNDAY SALE!
+
+    ul
+      each brochure in brochures
+        li
+          a(href=brochure.url)= brochure.island
