@@ -24,7 +24,6 @@ const addRecipientToSubscriptionList = id => {
 
 const addNewSubscription = newSubscription => {
   logger.info('adding new recipient email to sendgrid service');
-  /* eslint camelcase: "off" */
   const request = SendGridService.emptyRequest({
     method: 'POST',
     path: '/v3/contactdb/recipients',

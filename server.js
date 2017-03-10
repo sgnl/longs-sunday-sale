@@ -1,6 +1,8 @@
 
 'use strict';
 
+/* eslint camelcase: "off" */
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const winston = require('winston');
@@ -43,18 +45,7 @@ app.get('/', (req, res) => {
     .catch(err => res.send(err));
 });
 
-app.get('/why', (req, res) => {
-  return res.render('why');
-});
-
-app.get('/thank-you', (req, res) => {
-  return res.render('thank-you');
-});
-
-// add new sub via sendgrid api
 app.post('/newsletter/sub', validatePayloadOrQueryParams, (req, res) => {
-  logger.info('new subscription request received');
-
   return addNewSubscription(req.body.email)
     .then(response => addRecipientToSubscriptionList(response.body.persisted_recipients))
     .then(() => getRecentBrochures())
@@ -66,6 +57,20 @@ app.post('/newsletter/sub', validatePayloadOrQueryParams, (req, res) => {
       console.error('error saving new subscription email ', err);
       res.status(500);
     });
+});
+
+app.get('/why', (req, res) => {
+  return res.render('why');
+});
+
+app.get('/thank-you', (req, res) => {
+  return res.render('thank-you');
+});
+
+app.get('/newsletter/welcome-email', (req, res) => {
+  return getRecentBrochures()
+    .then(brochures => res.render('newsletter/welcome-email', { brochures, date_added: brochures.concat().shift().date_added }))
+    .catch(err => res.send(err));
 });
 
 app.use(expressWinston.errorLogger({
