@@ -53,7 +53,7 @@ const sendConfirmationEmail = (email, brochure) => {
         {
           to: [
             {
-              email: 'rayrfarias@gmail.com'
+              email: email
             }
           ],
           substitutions: {
