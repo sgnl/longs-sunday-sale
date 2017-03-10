@@ -7,7 +7,7 @@ const winston = require('winston');
 const expressWinston = require('express-winston');
 
 const logger = require('./services/logger');
-const { getRecentBrochures, getAllBrochures } = require('./services/mongo-service');
+const { getRecentBrochures } = require('./services/mongo-service');
 const {
   addNewSubscription,
   addRecipientToSubscriptionList,
