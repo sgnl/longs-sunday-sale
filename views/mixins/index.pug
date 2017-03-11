@@ -1,4 +1,13 @@
 
-mixin article(data)
-  a(href=`${data.url}` target='_blank').link
-    h2.copy.copy--uppercase.copy--underlined.copy--bottom-border= data.island
+mixin brochuresComponent(brochures, date_added)
+  header.header.header--shorter-bottom.grid--centered.grid--columns
+    h2= date_added
+    p.copy.copy--faint.copy--small click the name of an island to view its brochure
+  each brochure in brochures
+    article.article
+      a(href=`${brochure.url}` target='_blank').link
+        h2.copy.copy--uppercase.copy--underlined.copy--bottom-border= brochure.island
+
+mixin mainHeader()
+  header.header
+    h1.copy--uppercase.emoji--rainbow Sunday&nbsp;Sale&nbsp;Club

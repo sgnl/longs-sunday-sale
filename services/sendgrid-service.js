@@ -52,40 +52,34 @@ const sendConfirmationEmail = (email, brochures) => {
 
   const welcomeEmailHTML = welcomeEmailTemplate({ brochures });
 
-  console.log('welcomeEmailHTML: ', welcomeEmailHTML);
+  const request = SendGridService.emptyRequest({
+    method: 'POST',
+    path: '/v3/mail/send',
+    body: {
+      personalizations: [
+        {
+          to: [{ email }]
+        }
+      ],
+      from: {
+        email: 'sundaysalenewsletter@gmail.com',
+        name: 'Sunday Sale Club Newsletter'
+      },
+      subject: 'welcome',
+      content: [
+        {
+          type: 'text/html',
+          value: welcomeEmailHTML
+        }
+      ]
+    }
+  });
 
-  // const request = SendGridService.emptyRequest({
-  //   method: 'POST',
-  //   path: '/v3/mail/send',
-  //   body: {
-  //     personalizations: [
-  //       {
-  //         to: [
-  //           {
-  //             email: 'rayrfarias@gmail.com'
-  //           }
-  //         ]
-  //       }
-  //     ],
-  //     from: {
-  //       email: 'sundaysalenewsletter@gmail.com',
-  //       name: 'Sunday Sale Newsletter'
-  //     },
-  //     subject: 'welcome',
-  //     content: [
-  //       {
-  //         type: 'text/html',
-  //         value: welcomeEmailHTML
-  //       }
-  //     ]
-  //   }
-  // });
-
-  // return SendGridService.API(request)
-  //   .then(response => {
-  //     logger.info('success sending confirmation email');
-  //     return response;
-  //   });
+  return SendGridService.API(request)
+    .then(response => {
+      logger.info('success sending confirmation email');
+      return response;
+    });
 };
 
 module.exports = {

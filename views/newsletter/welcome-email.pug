@@ -1,13 +1,22 @@
 
+include ../mixins/index
+
 doctype html
 html(lang='en')
   head
-    link(href='https://fonts.googleapis.com/css?family=Open+Sans:300%7CRoboto' rel='stylesheet')
-    link(href='/css/email.css' rel='stylesheet')
   body
-    h1 It&apos;s that time again, SUNDAY SALE!
+    .container
+      +mainHeader()
 
-    ul
-      each brochure in brochures
-        li
-          a(href=brochure.url)= brochure.island
+      section.section.grid
+        +brochuresComponent(brochures, date_added)
+
+      footer.section.footer
+        p free (as in beer) service. free (as in freedom) code. gratis. libre. i am not affiliated with neither Long's or CVS companies
+        ul
+          li
+            a(href='https://sundaysale.club') tell your friends about sundaysale.club
+          li
+            a(href='https://github.com/sgnl') made with aloha
+          li
+            a(href='https://sundaysale.club/why') read why i built this service

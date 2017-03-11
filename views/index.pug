@@ -3,12 +3,7 @@ include mixins/index
 
 block content
   section.section.grid
-    header.header.header--shorter-bottom.grid--centered.grid--columns
-      h2= date_added
-      p.copy.copy--faint.copy--small click the name of an island to view its brochure
-    each brochure in brochures
-      article.article
-        +article(brochure)
+    +brochuresComponent(brochures, date_added)
 
   section.section
     header.header.header--shorter-bottom
