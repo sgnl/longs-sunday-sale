@@ -16,7 +16,7 @@ mongoose.connect(`mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWO
 
 const getRecentBrochures = () => {
   logger.info('retrieving recent brochure');
-  return Brochure.find({}).sort({ created_at: 1 }).limit(5);
+  return Brochure.find({}).sort({ created_at: -1 }).limit(5);
 };
 
 module.exports = { getRecentBrochures };
