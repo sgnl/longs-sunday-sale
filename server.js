@@ -8,7 +8,6 @@ const bodyParser = require('body-parser');
 const winston = require('winston');
 const expressWinston = require('express-winston');
 
-const logger = require('./services/logger');
 const { getRecentBrochures } = require('./services/mongo-service');
 const {
   addNewSubscription,
