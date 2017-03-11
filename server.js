@@ -36,7 +36,6 @@ if (process.env.ENVIRONMENT !== 'TEST') {
   }));
 }
 
-// otherwise nginx will serve static files in production
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
